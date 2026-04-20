@@ -1,0 +1,16 @@
+pip -> comando para instalar dependencias
+
+pip freeze > requirements.txt -> guardar dependencias para el ambiente de otro developer
+
+env\Scripts\activate -> activar ambiente para instalar dependencias
+
+fastapi dev -> run serverD
+
+Generate migrations through Alembi, this library permits create migrations and have a better 
+register about the DB changes
+
+alembic current -> check DB connection
+
+alembic revision --autogenerate -m "initial_migration_notes" -> generate migration(change env.ppy first)
+
+alembic upgrade head -> apply migration changes to DB

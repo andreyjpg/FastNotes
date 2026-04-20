@@ -1,0 +1,49 @@
+FastNotes/
+.venv/
+venv/
+env/
+ENV/
+bin/
+lib/
+include/
+
+# Byte-compiled / optimizados (Archivos de ejecución)
+**/__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribución / Empaquetamiento
+dist/
+build/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Variables de entorno (Datos sensibles/llaves)
+.env
+.venv
+*.env
+.secret
+.secrets
+
+# Unit test / Cobertura de código
+htmlcov/
+.tox/
+.noseresults
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.pytest_cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Archivos específicos de VS Code o PyCharm
+.vscode/
+.idea/
+
+# Logs y bases de datos locales (opcional)
+*.log
+*.sqlite3
