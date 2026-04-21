@@ -15,31 +15,23 @@ class UserService:
         self.repo = repo
 
     def get_users(self):
-        try:
-            user_data = self.repo.get_all()
-            return user_data
-        except:
-            raise InternalError()
+        user_data = self.repo.get_all()
+        return user_data
         
     def get_user_by_id(self, id: int):
-        try:
-            user_data = self.repo.get_by_id(id)
-            if not user_data:
-                raise UserNotFound("User not Found")
-            return user_data
-        except:
-            raise InternalError()
+        user_data = self.repo.get_by_id(id)
+        if not user_data:
+            raise UserNotFound("User not Found")
+        return user_data
         
     def register_user(self, user_data: UserCreate) -> UserResponse:
-        try:
-            user_dict = user_data.model_dump()
-            user_dict["hashed_password"] = pass_hasher.hash(user_data.password)
-            
-            new_user = User(**user_dict)
-            user = self.repo.create(new_user)
-            return user 
-        except: 
-            InternalError()
+        user_dict = user_data.model_dump()
+        user_dict["hashed_password"] = pass_hasher.hash(user_data.password)
+        
+        new_user = User(**user_dict)
+        user = self.repo.create(new_user)
+        return user 
+
     
     def login(self, username: str, password: str):
         try:
@@ -53,5 +45,3 @@ class UserService:
             raise UserCredentialsMismatch()
         except UserCredentialsMismatch:
             raise
-        except Exception:
-            InternalError()

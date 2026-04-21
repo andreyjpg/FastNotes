@@ -19,11 +19,8 @@ class NoteService:
         self.repo = repo
 
     def get_notes(self, user_id: int):
-        try:  
-            notes_data = self.repo.get_all(user_id)
-            return notes_data
-        except:
-            raise InternalError()
+        notes_data = self.repo.get_all(user_id)
+        return notes_data
 
 
     def get_note_by_id(self, note_id: int, user_id: int):
@@ -51,23 +48,18 @@ class NoteService:
         return self.repo.update(db_note, updated_note)
 
     def generate_propmt(self, user_id: int):
-        try:
-            db_notes = self.repo.get_all(user_id)
-            notes_for_prompt = [
-                {
-                    "id": note.id,
-                    "title": note.title,
-                    "description": note.description
-                } 
-                for note in db_notes
-            ]
-            note_json = json.dumps(notes_for_prompt)
-            print("para enviar", note_json)
-            propmt = f"{GENERAL_PROPMT} '\n\nNotas:\n' {note_json}"
-            llm_response = generate_content_via_llm(propmt)
-            print(llm_response.response)
-            notes_prioritized = json.loads(llm_response.response)
-            prioritize_list = [NotePriority.model_validate(item) for item in notes_prioritized]
-            return prioritize_list
-        except:
-            InternalError()
+        db_notes = self.repo.get_all(user_id)
+        notes_for_prompt = [
+            {
+                "id": note.id,
+                "title": note.title,
+                "description": note.description
+            } 
+            for note in db_notes
+        ]
+        note_json = json.dumps(notes_for_prompt)
+        propmt = f"{GENERAL_PROPMT} '\n\nNotas:\n' {note_json}"
+        llm_response = generate_content_via_llm(propmt)
+        notes_prioritized = json.loads(llm_response.response)
+        prioritize_list = [NotePriority.model_validate(item) for item in notes_prioritized]
+        return prioritize_list

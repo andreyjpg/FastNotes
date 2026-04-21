@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse
 from app.core.exceptions import InternalError, NoteNotFound, UserNotFound, UserCredentialsMismatch, CredentialsException
 from fastapi.exceptions import RequestValidationError
 
-async def endpoint_internal_error_handler(_: Request, __: InternalError):
+async def endpoint_internal_error_handler(_: Request, __: Exception):
     return JSONResponse(
         status_code = status.HTTP_500_INTERNAL_SERVER_ERROR,
         content={"error": "Internal_Failed", "message": "An error ocurred, try again"}
@@ -40,7 +40,7 @@ async def validation_exception_handler(_, __):
     )
 
 def setup_exceptions_handlers(app):
-    app.add_exception_handler(InternalError, endpoint_internal_error_handler)
+    app.add_exception_handler(Exception, endpoint_internal_error_handler)
     app.add_exception_handler(NoteNotFound, endpoint_note_not_found_handler)
     app.add_exception_handler(UserNotFound, endpoint_user_not_found_handler)
     app.add_exception_handler(UserCredentialsMismatch, login_credentials_mismatch)
