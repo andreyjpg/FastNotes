@@ -31,12 +31,15 @@ class UserService:
             raise InternalError()
         
     def register_user(self, user_data: UserCreate) -> UserResponse:
-        user_dict = user_data.model_dump()
-        user_dict["hashed_password"] = pass_hasher.hash(user_data.password)
-        
-        new_user = User(**user_dict)
-        user = self.repo.create(new_user)
-        return user 
+        try:
+            user_dict = user_data.model_dump()
+            user_dict["hashed_password"] = pass_hasher.hash(user_data.password)
+            
+            new_user = User(**user_dict)
+            user = self.repo.create(new_user)
+            return user 
+        except: 
+            InternalError()
     
     def login(self, username: str, password: str):
         try:
