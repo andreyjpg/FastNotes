@@ -25,3 +25,6 @@ class NoteUpdate(SQLModel):
     end_date: Optional[datetime] = None
     priority: Optional[PrioritiesName] = None
 
+class NotePriority(SQLModel):
+    id: int
+    priority: PrioritiesName

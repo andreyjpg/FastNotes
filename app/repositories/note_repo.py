@@ -6,12 +6,13 @@ class NoteRepository:
     def __init__(self, session: Session):
         self.session = session
 
-    def get_all(self):
-        statement = select(Note)
+    def get_all(self, user_id: int):
+        statement = select(Note).where(Note.user_id == user_id)
         return self.session.exec(statement).all()
 
-    def get_by_id(self, note_id: int):
-        statement = select(Note).where(Note.id ==note_id)
+    def get_by_id(self, note_id: int, user_id: id):
+        print(user_id)
+        statement = select(Note).where(Note.id ==note_id).where(Note.user_id == user_id)
         return self.session.exec(statement).first()
     
     def create(self, db_note: Note):

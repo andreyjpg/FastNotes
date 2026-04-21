@@ -24,7 +24,7 @@ async def get_by_id(user_id: int, db: Session = Depends(get_session), _: UserRes
     service = UserService(repo)
     return service.get_users(user_id) 
 
-@router.post("/register_user")
+@router.post("/register_user", response_model=list[UserResponse])
 async def register_user(body: UserCreate, db: Session = Depends(get_session)):
     repo = UserRepository(db)
     service = UserService(repo)
